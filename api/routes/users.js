@@ -51,8 +51,55 @@ router.get("/:id" ,async(req,res)=>{
         
     }
 })
-//GET ALL USERS
+
 //FOLLOW USER API
+router.put("/:id/follow",async(req,res)=>{
+    if(req.body.userId!==req.params.id){
+        try {
+            
+            const currentUser = await User.findOne({_id:req.body.userId});
+            const user = await User.findById(req.params.id);
+            
+            
+            if(!user.followers.includes(req.body.userId)){
+                await user.updateOne({$push:{followers:req.body.userId}});
+                await currentUser.updateOne({$push:{followings:req.params.id}});
+                return res.status(200).json({success:true,message:"User has been followed successfully"})
+            }else{
+                return res.status(403).json({success:false,message:"User is already followed"})
+            }
+        } catch (error) {
+         res.status(500).json({success:false,message:"Internal server error"})
+            
+        }
+    }else{
+        return res.status(403).json({success:false,message:"You cant follow your self"})
+    }
+})
 //UNFOLLOW USER API
+router.put("/:id/unfollow",async(req,res)=>{
+    if(req.body.userId!==req.params.id){
+        try {
+            
+            const currentUser = await User.findOne({_id:req.body.userId});
+            const user = await User.findById(req.params.id);
+            
+            
+            if(user.followers.includes(req.body.userId)){
+                await user.updateOne({$pull:{followers:req.body.userId}});
+                await currentUser.updateOne({$pull:{followings:req.params.id}});
+                return res.status(200).json({success:true,message:"User has been unfollowed successfully"})
+            }else{
+                return res.status(403).json({success:false,message:"User is already unfollowed"})
+            }
+        } catch (error) {
+         res.status(500).json({success:false,message: "Internal server error"})
+            
+        }
+    }else{
+        return res.status(403).json({success:false,message:"You cant unfollow your self"})
+    }
+})
+
 
 module.exports = router;
