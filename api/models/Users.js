@@ -8,6 +8,12 @@ const UserSchema = new Schema({
         max:40,
         required:true
     },
+    name:{
+        type:String,
+        min:4,
+        max:40,
+        required:true
+    },
     email:{
         type:String,
         unique:true,
@@ -40,7 +46,29 @@ const UserSchema = new Schema({
     isAdmin:{
         type:Boolean,
         default:false
+    },
+    desc:{
+        type:String,
+        default:"",
+        max:50
+    },
+    city:{
+        type:String,
+        default:"",
+        max:50
+    },
+    from:{
+        type:String,
+        default:""
     }
-});
+    ,
+    relationship:{
+        type:Number,
+        enum:[1,2,3]
+    }
+
+}
+    ,
+    {timestamps:true});
 
 module.exports = model("User",UserSchema);

@@ -12,7 +12,7 @@ app.use(express.urlencoded({
 fs.readdir('./routes' , async(err,files)=>{
     if(err) throw new err;
     files.forEach((file)=>{
-        app.use('/api' , require(`./routes/${file}`))
+        app.use(`/api/${file.split('.')[0].toLowerCase()}/` , require(`./routes/${file}`))
     })
 })
 

@@ -1,12 +1,13 @@
-import { Footer } from "./components/Footer";
-import { Navbar } from "./components/Navbar";
+import { Signup } from "./components/Signup";
+
 
 
 function App() {
   return (
     <>
-    <Navbar/>
-    <Footer/>
+    <Signup/>
+    
+
     </>
   );
 }

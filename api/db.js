@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 async function connectDB(){
     try {
-        mongoose.connect("mongodb://localhost:27017/usersdb", {
+        mongoose.connect("mongodb://127.0.0.1:27017/myapp", {
           useUnifiedTopology: true,
           useNewUrlParser: true
         });
@@ -11,7 +11,7 @@ async function connectDB(){
         console.log("MongoDB Connection Error")
       }
       process.on('unhandledRejection', error => {
-        console.log('unhandledRejection', error.message);
+        console.log('unhandledRejection', error);
       }); 
 }
 
