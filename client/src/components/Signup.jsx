@@ -15,7 +15,7 @@ export const Signup = () => {
         <input type="text" placeholder="Enter Your Name" className="mb-4 px-7 py-4 outline-none shadow-md w-[100%]" name="" id="" />        
         <input type="email" placeholder="Enter Your E-mail" className="mb-4 px-7 py-4 outline-none shadow-md w-[100%]" name="" id="" />  
         <input type="password" placeholder="Enter Your Password" className="mb-4 px-7 py-4 outline-none shadow-md w-[100%]" name="" id="" />  
-        <button className='px-6 py-4 w-[100%] bg-green-600 text-white font-bold'>Signup</button>      
+        <button className='px-6 py-4 w-[100%] bg-green-600 text-white font-bold hover:bg-green-700'>Signup</button>      
       </div>
     </div>
   )
