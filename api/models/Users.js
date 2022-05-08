@@ -1,74 +1,72 @@
-const {Schema , model} = require('mongoose');
+const { Schema, model } = require("mongoose");
 
-const UserSchema = new Schema({
-    username:{
-        type:String,
-        unique:true,
-        min:4,
-        max:40,
-        required:true
+const UserSchema = new Schema(
+  {
+    username: {
+      type: String,
+      unique: true,
+      min: 4,
+      max: 40,
+      required: true,
     },
-    name:{
-        type:String,
-        min:4,
-        max:40,
-        required:true
+    name: {
+      type: String,
+      min: 4,
+      max: 40,
+      required: true,
     },
-    email:{
-        type:String,
-        unique:true,
-        min:8,
-        max:40,
-        required:true
+    email: {
+      type: String,
+      unique: true,
+      min: 8,
+      max: 40,
+      required: true,
     },
-    password:{
-        type:String,
-        required:true,
-        min:6
+    password: {
+      type: String,
+      required: true,
+      min: 6,
     },
-    profilePicture:{
-        type:String,
-        default:""
+    profilePicture: {
+      type: String,
+      default: "",
     },
-    coverPicture:{
-        type:String,
-        default:""
+    coverPicture: {
+      type: String,
+      default: "",
     },
-    followers:{
-        type:Array,
-        default:[]
-    }
-    ,
-    followings:{
-        type:Array,
-        default:[]
+    followers: {
+      type: Array,
+      default: [],
     },
-    isAdmin:{
-        type:Boolean,
-        default:false
+    followings: {
+      type: Array,
+      default: [],
     },
-    desc:{
-        type:String,
-        default:"",
-        max:50
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
-    city:{
-        type:String,
-        default:"",
-        max:50
+    desc: {
+      type: String,
+      default: "",
+      max: 50,
     },
-    from:{
-        type:String,
-        default:""
-    }
-    ,
-    relationship:{
-        type:Number,
-        enum:[1,2,3]
-    }
+    city: {
+      type: String,
+      default: "",
+      max: 50,
+    },
+    from: {
+      type: String,
+      default: "",
+    },
+    relationship: {
+      type: Number,
+      enum: [1, 2, 3],
+    },
+  },
+  { timestamps: true }
+);
 
-}
-    ,
-    {timestamps:true});
-
-module.exports = model("User",UserSchema);
+module.exports = model("User", UserSchema);
