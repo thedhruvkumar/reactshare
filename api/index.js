@@ -22,6 +22,6 @@ fs.readdir("./routes", async (err, files) => {
   });
 });
 
-app.listen(process.env.PORT || 5000, () => {
+app.listen( 5000, () => {
   console.log("Server is live on port 5000");
 });
