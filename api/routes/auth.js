@@ -16,7 +16,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ success:false,errors: errors.array() });
     }
 
     try {
@@ -30,18 +30,17 @@ router.post(
       }
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(req.body.password, salt);
-      const user = await new User({
+      const user = new User({
         username: req.body.username,
         name: req.body.name,
         email: req.body.email,
         password: hashPassword,
-        city: req.body?.city,
-        isAdmin: req.body.isAdmin,
+        city: req.body.city ?? " ",
+        isAdmin: req.body.isAdmin ?? false,
       });
 
-      await user.save().then((user) => {
-        res.status(200).json(user);
-      });
+      const savedUser = await user.save();
+      res.status(201).json({success:true,message:"Account Registered Successfully"})
     } catch (error) {
       console.log(error);
       res.status(500).json({ success: false, error: "Internal Server Error" });

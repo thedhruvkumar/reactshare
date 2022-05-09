@@ -47,6 +47,22 @@ router.delete("/:id", async (req, res) => {
       .json({ success: false, error: "You can delete only your account" });
   }
 });
+
+//GET ALL USERS API
+router.get("/fetch/all" , async(req,res)=>{
+  try {
+    const user = await User.find({}).select([
+      "-password",
+      "-createdAt",
+      "-updatedAt",
+    ]);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+});
+
+
 //GET A USER API
 router.get("/:id", async (req, res) => {
   try {
