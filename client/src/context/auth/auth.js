@@ -32,8 +32,35 @@ const AuthState = (props) => {
     return resJson;
   }
 
+  const authenticateUser = async (email,password) =>{
+    const url = `${HOST}/api/auth/login/`;
+    const data = await fetch(url, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email,password}),
+    });
+    const json = await data.json();
+    return json;
+  }
+
+  const deleteUser = async(userid)=>{
+    const url = `${HOST}/api/users/${userid}`;
+    const data = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token':localStorage.getItem('auth-token')
+      },
+      
+    });
+    const json = await data.json();
+    return json;
+  }
+
   return (
-    <authContext.Provider value={{ createUser , fetchAllUsers }}>
+    <authContext.Provider value={{ createUser , fetchAllUsers , authenticateUser ,deleteUser}}>
       {props.children}
     </authContext.Provider>
   );

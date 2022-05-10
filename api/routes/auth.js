@@ -52,20 +52,25 @@ router.post(
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    let user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: "User not found!" });
+    const user = await User.findOne({ email:email });
+    if (!user) return res.status(400).json({ success:false,error: "User not found!" });
     const passwordCompare = await bcrypt.compare(password, user.password);
     if (!passwordCompare) {
       return res
         .status(400)
         .json({ error: "Please Login with valid credential" });
     }
+    
     const data = {
       user: {
         id: user.id,
+        email:user.email,
+        username:user.username,
+        name:user.name,
+        isAdmin:user.isAdmin
       },
     };
-
+    
     const authtoken = jwt.sign(data, JWT_SECRET);
     res.status(200).json({ success: true, authtoken });
   } catch (error) {

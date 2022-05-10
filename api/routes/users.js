@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const authorization = require("../middleware/authorization");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/Users");
 require("dotenv").config();
@@ -31,8 +32,8 @@ router.put("/:id", async (req, res) => {
 });
 
 //DELETE USER API
-router.delete("/:id", async (req, res) => {
-  if (req.body.userId === req.params.id) {
+router.delete("/:id", authorization ,async (req, res) => {
+  if (req.user.id === req.params.id || req.user.isAdmin) {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
       res

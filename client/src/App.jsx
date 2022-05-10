@@ -3,6 +3,7 @@ import AuthState from "./context/auth/auth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Dashboard } from "./components/Dashboard";
+import {Login} from "./components/Login";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
           draggable
           pauseOnHover
         />
-        <Signup />
-        {/* <Dashboard/> */}
+        {/* <Login/> */}
+        <Dashboard/>
+        <Signup/>
         
       </AuthState>
     </>

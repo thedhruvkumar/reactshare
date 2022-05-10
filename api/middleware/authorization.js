@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
-const authJWT = async (req, res, next) => {
+const authorization = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
     res.status(401).send({ error: "Please Authenticate using a valid token" });
@@ -12,8 +12,8 @@ const authJWT = async (req, res, next) => {
 
     next();
   } catch (error) {
-    res.status(401).send({ error: "Please Authenticate using a valid token" });
+    res.status(403).send({ error: "Authorization Failed" });
   }
 };
 
-module.exports = authJWT;
+module.exports = authorization;

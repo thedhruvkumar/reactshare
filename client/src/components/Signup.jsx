@@ -38,7 +38,7 @@ export const Signup = () => {
           draggable: true,
           progress: undefined,
           });
-          setLoading(true);
+          setLoading(false);
       }else{
         toast.error('An Error Occured', {
           position: "top-left",
