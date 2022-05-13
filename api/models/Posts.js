@@ -1,21 +1,26 @@
 const { Schema, model } = require("mongoose");
 
-const PostSchema = new Schema({
-    userId:{
-        type:Schema.Types.ObjectId,
-        ref:'User'
+const PostSchema = new Schema(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
-    desc:{
-        type:String,
-        max:500
+    desc: {
+      type: String,
+      max: 500,
     },
-    img:{
-        type:String
+    img: {
+      type: String,
     },
-    likes:{
-        type:Array,
-        default:[]
-    }
-}, { timestamps: true });
+    likes: {
+      type: Array,
+      default: [],
+    },
+    createdAt: Number,
+    updatedAt: Number,
+  },
+  { timestamps:{ currentTime: ()=> Date.now() }}
+);
 
 module.exports = model("Post", PostSchema);

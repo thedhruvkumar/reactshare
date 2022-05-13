@@ -69,7 +69,6 @@ router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select([
       "-password",
-      "-createdAt",
       "-updatedAt",
     ]);
     res.status(200).json(user);

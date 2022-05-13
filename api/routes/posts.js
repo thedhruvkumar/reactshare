@@ -1,12 +1,16 @@
 const router = require("express").Router();
 const Post = require("../models/Posts");
 const User = require("../models/Users");
-
+const authorization = require("../middleware/authorization");
 
 //CREATE POST API
-router.post("/", async (req, res) => {
+router.post("/" , authorization , async (req, res) => {
   try {
-    const newPost = new Post(req.body);
+    const newPost = new Post({
+      desc:req.body.desc,
+      img:req.body.img,
+      userId:req.user.id
+    });
     const savedPost = await newPost.save();
     res.status(201).json(savedPost);
   } catch (error) {
@@ -33,15 +37,15 @@ router.put("/:id", async (req, res) => {
   }
 });
 //DELETE POST API
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authorization ,async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     !post && res.status(404).json({ success: false, error: "Post not found" });
-    if (post.userId.toString() === req.body.userId) {
+    if (post.userId.toString() === req.user.id || req.user.isAdmin) {
       await post.deleteOne();
       return res
         .status(200)
-        .json({ success: true, error: "The post has been deleted" });
+        .json({ success: true, message: "The post has been deleted" });
     } else {
       return res
         .status(403)
@@ -52,20 +56,20 @@ router.delete("/:id", async (req, res) => {
   }
 });
 //LIKE/DISLIKE POST API
-router.put("/:id/like", async (req, res) => {
+router.put("/:id/like", authorization , async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     !post && res.status(404).json({ success: false, error: "Post not found" });
-    if (!post.likes.includes(req.body.userId)) {
-      await post.updateOne({ $push: { likes: req.body.userId } });
+    if (!post.likes.includes(req.user.id)) {
+      await post.updateOne({ $push: { likes: req.user.id } });
       return res
         .status(200)
-        .json({ success: true, error: "The post has been liked" });
+        .json({ success: true,liked:true, message: "The post has been liked" });
     } else {
-      await post.updateOne({ $pull: { likes: req.body.userId } });
+      await post.updateOne({ $pull: { likes: req.user.id} });
       return res
         .status(200)
-        .json({ success: true, error: "The post has been disliked" });
+        .json({ success: true,liked:false, message: "The post has been disliked" });
     }
   } catch (error) {
     res.status(500).json({ success: false, error: "Internal Server Error" });
@@ -83,16 +87,18 @@ router.get("/:id/", async (req, res) => {
   }
 });
 //GET TIMELINE POST API
-router.get("/timeline/all", async (req, res) => {
+router.get("/timeline/all" , authorization , async (req, res) => {
   try {
-    const currentUser = await User.findById(req.body.userId);
+    
+    const currentUser = await User.findById(req.user.id);
     const userPosts = await Post.find({ userId: currentUser._id });
+    // const userPosts = await Post.find();
     const friendPosts = await Promise.all(
       currentUser.followings.map((friendId) => {
         return Post.find({ userId: friendId });
       })
-    );
-    res.status(200).json(userPosts.concat(...friendPosts))
+      );
+    res.status(200).json(userPosts.concat(...friendPosts).reverse())
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: "Internal Server Error" });

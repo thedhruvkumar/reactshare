@@ -65,8 +65,14 @@ const UserSchema = new Schema(
       type: Number,
       enum: [1, 2, 3],
     },
+    isVerified:{
+      type:Boolean,
+      default:false
+    },
+    createdAt: Number,
+    updatedAt: Number,
   },
-  { timestamps: true }
+  { timestamps: { currentTime: ()=> Date.now() } }
 );
 
 module.exports = model("User", UserSchema);
