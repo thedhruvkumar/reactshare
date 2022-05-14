@@ -3,23 +3,29 @@ import userContext from '../context/users/userContext';
 import postContext from '../context/posts/postContext';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { Link } from 'react-router-dom';
+import { format } from 'timeago.js';
+import { useJwt } from "react-jwt";
+import Tooltip from "@mui/material/Tooltip";
+import PostMenu from "./PostMenu";
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+
 
 export const Cards = ({desc,userId,date,id,likes}) => {
-  const UserState = useContext(userContext);
-  const PostState = useContext(postContext);
+    const UserState = useContext(userContext);
+    const PostState = useContext(postContext);
     const {getUser} = UserState;
     const {deletePost , likePost , posts,setPosts,getTimeline} = PostState;
     const [user, setUser] = useState({});
     const [isLiked, setLike] = useState(false)
-    const newDate = new Date(date)
-    const formattedDate = `${newDate.getDate()}-${newDate.getMonth()+1}-${newDate.getFullYear()} `
+    const { decodedToken, isExpired } = useJwt(localStorage.getItem("auth-token"));
+   
+    
     useEffect(() => {
       getUser(userId).then((data)=>{
         setUser(data)
         
-
       })
-
       getTimeline().then((data)=>{
         setPosts(data)
         
@@ -43,29 +49,34 @@ export const Cards = ({desc,userId,date,id,likes}) => {
   return (
     <div>
 
-<div key={user._id} className="p-0 my-5 w-[100%]">
+<div key={user._id} className="p-0 my-0 border-b-2 w-[100%]">
     
     <div className=" w-[100%] shadow-xl lg:flex">
       
       <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-[100%]">
         
-        <div className="flex items-center">
+        <div className="flex items-center relative">
           <img className="w-10 h-10 rounded-full mr-4" src="/user.png" alt="Avatar of Writer"/>
-          <div className="text-sm">
-            <Link to={`/user/${userId}`} className="text-gray-900 leading-none font-semibold text-base">{user.name} {user.isVerified?<VerifiedIcon style={{ color: "blue" }} />:""} <span className='text-gray-400 text-sm font-light'>@{user.username}</span> </Link>
-            <p className="text-gray-600">{formattedDate}</p>
+          <div className="text-sm flex">
+            <Link to={`/user/${userId}`} className="text-gray-900 leading-none font-semibold text-base">{user.name} {user.isVerified?<Tooltip title="Verified User"><VerifiedIcon style={{ color: "blue" }} /></Tooltip>:""} <span className='text-gray-500 text-sm font-light flex'>@{user.username}<p className="text-gray-500 mx-2">• {format(date)}</p></span> </Link>
+            
+          
+          </div>
+          <div className='absolute right-1 top-0'>
+          <PostMenu id={id} delFunc={deletePost}/>
           </div>
         </div>
           <div className="mt-4 p-3">
           <p className="text-gray-700 text-base">{desc}</p>
           
-          
         </div>
-        <div className="px-11 flex justify-between items-center">
-      <button onClick={()=>handleDelete(id)} className='px-8 py-3 w-48 rounded-md shadow-md bg-red-500 font-semibold text-white'>Delete</button>
-      <button onClick={()=>handleLike(id)} className='px-8 py-3 w-48 rounded-md shadow-md bg-gray-500 font-semibold text-white'>({likes.length}){isLiked?"Liked":"Like"}</button>
+          <span className='text-base text-gray-400 font-normal mt-2 px-3 py-1 border-t-2 '>{likes.length} People Liked</span>
+        <div className=" flex justify-between items-center">
+      
+      <button onClick={()=>handleLike(id)} className='font-semibold rounded-md p-3 hover:bg-blue-100 hover:text-blue-600'>{likes.includes(decodedToken?.user?.id)?<ThumbUpIcon/>:<ThumbUpOffAltIcon/>}</button>
+    
 
-        </div>
+    </div>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
-import AuthState from "./context/auth/auth";
+import { useContext,useEffect } from "react";
+import authContext from "./context/auth/authContext";
 import { BrowserRouter , Route , Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,20 +8,17 @@ import { Dashboard } from "./components/Dashboard";
 import {Login} from "./components/Login";
 import { NotFound } from "./components/NotFound";
 import { Feed } from "./components/Feed";
-import PostState from "./context/posts/posts"
-import UserState from "./context/users/userState"
 import { Profile } from "./components/Profile";
 
 function App() {
-  const userLogin = localStorage.getItem("auth-token")
+  const authState = useContext(authContext);
+  const {login} =authState;
+
+  
 
   return (
     <>
-      <AuthState>
-        <UserState>
-
-        <PostState>
-
+      
         <BrowserRouter>
         <ToastContainer
           position="top-left"
@@ -35,7 +33,7 @@ function App() {
           />
           <Routes>
 
-           <Route exact path ="/" element={userLogin?<Feed/>:<Login/>} />
+           <Route exact path ="/" element={login?<Feed/>:<Login/>} />
            <Route exact path ="/dashboard" element={<Dashboard/>} />
            <Route exact path ="/signup" element={<Signup/>} />
            <Route exact path ="/user/:userId" element={<Profile/>} />
@@ -44,9 +42,7 @@ function App() {
           </Routes>
         
           </BrowserRouter>
-        </PostState>
-        </UserState>
-      </AuthState>
+        
     </>
   );
 }
