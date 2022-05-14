@@ -1,7 +1,7 @@
 import React from "react";
 import userContext from "./userContext";
 
-const HOST = "http://localhost:5000";
+const HOST = process.env.REACT_APP_HOST;
 
 const UserState = (props) => {
   const getUser = async(username)=>{

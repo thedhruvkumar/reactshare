@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import authContext from "./authContext";
 
-const HOST = "http://localhost:5000";
+const HOST = process.env.REACT_APP_HOST;
 
 const AuthState = (props) => {
   const [login, setLogin] = useState(false)

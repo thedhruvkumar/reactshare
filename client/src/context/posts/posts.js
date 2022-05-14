@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import postContext from "./postContext";
 
-const HOST = "http://localhost:5000";
+const HOST = process.env.REACT_APP_HOST;
 
 const PostState = (props) => {
 
