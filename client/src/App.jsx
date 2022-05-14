@@ -34,7 +34,7 @@ function App() {
           <Routes>
 
            <Route exact path ="/" element={login?<Feed/>:<Login/>} />
-           <Route exact path ="/dashboard" element={<Dashboard/>} />
+           //<Route exact path ="/dashboard" element={<Dashboard/>} />
            <Route exact path ="/signup" element={<Signup/>} />
            <Route exact path ="/user/:userId" element={<Profile/>} />
            <Route exact path ="*" element={<NotFound/>} />
