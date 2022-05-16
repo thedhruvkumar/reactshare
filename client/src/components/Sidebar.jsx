@@ -1,13 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useJwt } from "react-jwt";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar = () => {
-    const { decodedToken } = useJwt(localStorage.getItem("auth-token"));
-    const navigate = useNavigate();
-
+  const { decodedToken } = useJwt(localStorage.getItem("auth-token"));
+  const navigate = useNavigate();
 
   return (
     <div className="sidebar">
@@ -17,22 +16,46 @@ export const Sidebar = () => {
       <div className="mt-6">
         <ul className="space-y-6 px-3 py-2">
           <li>
-            <Link to={"/"} className="side-nav-btn">
+            <NavLink
+              to={"/"}
+              className="side-nav-btn"
+              style={({ isActive }) =>
+                isActive
+                  ? { color: "#1d4ed8", backgroundColor: "#bfdbfe" }
+                  : undefined
+              }
+            >
               <FontAwesomeIcon icon="fas fa-home" />{" "}
               <span className="mx-5">Home</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to={`acc/${decodedToken?.user?.id}`} className="side-nav-btn">
+            <NavLink
+              to={`acc/${decodedToken?.user?.id}`}
+              className="side-nav-btn"
+              style={({ isActive }) =>
+                isActive
+                  ? { color: "#1d4ed8", backgroundColor: "#bfdbfe" }
+                  : undefined
+              }
+            >
               <FontAwesomeIcon icon="fas fa-user-circle" />{" "}
               <span className="mx-5">Account</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to={"sett"} className="side-nav-btn">
+            <NavLink
+              to={"/sett"}
+              className="side-nav-btn"
+              style={({ isActive }) =>
+                isActive
+                  ? { color: "#1d4ed8", backgroundColor: "#bfdbfe" }
+                  : undefined
+              }
+            >
               <FontAwesomeIcon icon="fas fa-cog" />{" "}
               <span className="mx-5">Settings</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
             <button
