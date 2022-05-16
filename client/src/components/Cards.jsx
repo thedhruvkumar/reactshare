@@ -17,7 +17,6 @@ export const Cards = ({desc,userId,date,id,likes}) => {
     const {getUser} = UserState;
     const {deletePost , likePost , posts,setPosts,getTimeline} = PostState;
     const [user, setUser] = useState({});
-    const [isLiked, setLike] = useState(false)
     const { decodedToken, isExpired } = useJwt(localStorage.getItem("auth-token"));
    
     
@@ -58,7 +57,7 @@ export const Cards = ({desc,userId,date,id,likes}) => {
         <div className="flex items-center relative">
           <img className="w-10 h-10 rounded-full mr-4" src="/user.png" alt="Avatar of Writer"/>
           <div className="text-sm flex">
-            <Link to={`/user/${userId}`} className="text-gray-900 leading-none font-semibold text-base">{user.name} {user.isVerified?<Tooltip title="Verified User"><VerifiedIcon style={{ color: "blue" }} /></Tooltip>:""} <span className='text-gray-500 text-sm font-light flex'>@{user.username}<p className="text-gray-500 mx-2">• {format(date)}</p></span> </Link>
+            <Link to={`/acc/${userId}`} className="text-gray-900 leading-none font-semibold text-base">{user.name} {user.isVerified?<Tooltip title="Verified User"><VerifiedIcon style={{ color: "blue" }} /></Tooltip>:""} <span className='text-gray-500 text-sm font-light flex'>@{user.username}<p className="text-gray-500 mx-2">• {format(date)}</p></span> </Link>
             
           
           </div>

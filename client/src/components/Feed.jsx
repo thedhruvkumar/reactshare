@@ -21,14 +21,8 @@ export const Feed = () => {
     
 
   return (
-    <div className='min-h-full bg-slate-100 w-[100%] flex justify-center items-center '>
+    <div className='bg-slate-100 w-full h-screen overflow-auto flex items-center flex-col '>
         <div className='my-8'>
-      <button className="px-10 py-3 bg-red-500 font-semibold text-white my-5" onClick={()=>{
-        localStorage.removeItem("auth-token")
-        setTimeout(() => {
-          navigate("/")
-        }, 1000);
-        }}>Logout</button>
 
         <div className="w-[640px] mb-16">
         <PostBox/>

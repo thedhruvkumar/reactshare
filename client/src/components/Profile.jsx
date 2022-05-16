@@ -29,7 +29,7 @@ export const Profile = () => {
 
   return (
     <div className="px-32 h-screen ">
-        <div className="h-full w-full shadow-xl">
+        <div className="h-full w-full bg-white shadow-xl">
         <div className="relative">
         <div className="banner w-full h-80">
             <img src="https://timelinecovers.pro/facebook-cover/download/lush-green-grass-mountains-at-kosovo-facebook-cover.jpg" className="w-full h-full" alt="coverimage" />
