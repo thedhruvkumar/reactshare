@@ -1,10 +1,12 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import { Search } from "./Search";
 
-export const Main = () => {
+export const Main = ({isOpen}) => {
   return (
     <div>
-        <div className="h-screen w-4/5 overflow-auto bg-gray-200 fixed right-0 top-0">
+        <div className={`bg-blue-600 h-screen overflow-auto fixed right-0 top-0 ${isOpen ? 'w-4/5':'w-11/12'}`}>
+        <Search isOpen={isOpen} />
         <Outlet/>
       </div>
     </div>

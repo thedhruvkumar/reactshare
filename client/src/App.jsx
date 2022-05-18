@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useState } from "react";
 import authContext from "./context/auth/authContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -15,6 +15,7 @@ import { Main } from "./components/Main";
 function App() {
   const authState = useContext(authContext);
   const { login } = authState;
+  const [isOpen, setOpen] = useState(true)
 
   return (
     <>
@@ -31,9 +32,9 @@ function App() {
           pauseOnHover
         />
         <div className="flex w-full">
-          <Sidebar/>
+          <Sidebar isOpen={isOpen} setOpen={setOpen}/>
           <Routes>
-            <Route exact path="/" element={<Main/>}>
+            <Route exact path="/" element={<Main isOpen={isOpen} setOpen={setOpen}/>}>
               <Route
                 path="/"
                 element={

@@ -3,10 +3,10 @@
 
 @layer components{
     .sidebar{
-        @apply fixed left-0 top-0 h-screen w-1/5 bg-white dark:bg-gray-900 p-2;
+        @apply fixed left-0 top-0 h-screen dark:bg-gray-900 p-2;
     }
     .side-nav-btn{
-        @apply flex items-center px-5 py-5 font-normal bg-white text-gray-900 rounded-lg dark:text-white hover:bg-blue-200 hover:text-blue-700 dark:hover:bg-gray-700 transition-all duration-300 text-xl ;
+        @apply flex items-center lg:px-7 lg:py-6 h-full text-center w-full font-normal bg-white text-gray-900 rounded-lg dark:text-white hover:bg-blue-200 hover:text-blue-700 dark:hover:bg-gray-700 text-base lg:text-lg p-3;
     }
 }
 

@@ -1,18 +1,19 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 
-export const Sidebar = () => {
+export const Sidebar = ({isOpen,setOpen}) => {
   const { decodedToken } = useJwt(localStorage.getItem("auth-token"));
   const navigate = useNavigate();
 
   return (
-    <div className="sidebar">
-      <div className="header text-2xl p-4">
-        <span className="text-center dark:text-white">ReactShare</span>
-      </div>
+    <div className={`sidebar ${isOpen ? 'w-1/5' : 'w-1/12'}`}>
+      <div className={`header text-2xl p-4 flex ${isOpen?"justify-between":"justify-center"} items-center`}>
+            {isOpen && <span className='text-center dark:text-white'>ReactShare</span>}
+            <button className='transition-all duration-500 text-center' onClick={()=> setOpen(!isOpen)}><FontAwesomeIcon icon="fas fa-bars" /></button>
+        </div>
       <div className="mt-6">
         <ul className="space-y-6 px-3 py-2">
           <li>

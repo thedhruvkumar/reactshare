@@ -7,8 +7,9 @@ import UserState from "./context/users/userState";
 import PostState from "./context/posts/posts";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
-import { faHome , faUserCircle , faCog, faSignOut } from '@fortawesome/free-solid-svg-icons'
-library.add(fab ,faHome , faUserCircle , faCog , faSignOut)
+import { faHome , faUserCircle , faCog, faSignOut, faBars , faSearch} from '@fortawesome/free-solid-svg-icons'
+library.add(fab ,faHome , faUserCircle , faCog , faSignOut , faBars , faSearch)
+
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
