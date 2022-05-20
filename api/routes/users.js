@@ -8,7 +8,7 @@ require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 //UPDATE USER API
-router.put("/:id", async (req, res) => {
+router.put("/:id", authorization ,  async (req, res) => {
   if (req.body.userId === req.params.id) {
     if (req.body.password) {
       try {
@@ -50,7 +50,7 @@ router.delete("/:id", authorization ,async (req, res) => {
 });
 
 //GET ALL USERS API
-router.get("/fetch/all" , async(req,res)=>{
+router.get("/fetch/all" , authorization , async(req,res)=>{
   try {
     const user = await User.find({}).select([
       "-password",
@@ -65,7 +65,7 @@ router.get("/fetch/all" , async(req,res)=>{
 
 
 //GET A USER API
-router.get("/:id", async (req, res) => {
+router.get("/:id", authorization , async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select([
       "-password",
@@ -78,7 +78,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //FOLLOW USER API
-router.put("/:id/follow", async (req, res) => {
+router.put("/:id/follow", authorization ,async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
       const currentUser = await User.findOne({ _id: req.body.userId });
@@ -110,7 +110,7 @@ router.put("/:id/follow", async (req, res) => {
   }
 });
 //UNFOLLOW USER API
-router.put("/:id/unfollow", async (req, res) => {
+router.put("/:id/unfollow", authorization , async (req, res) => {
   if (req.body.userId !== req.params.id) {
     try {
       const currentUser = await User.findOne({ _id: req.body.userId });

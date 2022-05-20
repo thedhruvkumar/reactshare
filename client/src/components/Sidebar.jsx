@@ -27,7 +27,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
               }
             >
               <FontAwesomeIcon icon="fas fa-home" />{" "}
-              <span className="mx-5">Home</span>
+              {isOpen &&<span className='mx-5'>Home</span>}
             </NavLink>
           </li>
           <li>
@@ -41,7 +41,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
               }
             >
               <FontAwesomeIcon icon="fas fa-user-circle" />{" "}
-              <span className="mx-5">Account</span>
+              {isOpen &&<span className='mx-5'>Account</span>}
             </NavLink>
           </li>
           <li>
@@ -55,7 +55,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
               }
             >
               <FontAwesomeIcon icon="fas fa-cog" />{" "}
-              <span className="mx-5">Settings</span>
+              {isOpen &&<span className='mx-5'>Settings</span>}
             </NavLink>
           </li>
           <li>
@@ -69,7 +69,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
               }}
             >
               <FontAwesomeIcon icon="fas fa-sign-out" />{" "}
-              <span className="mx-5">Logout</span>
+              {isOpen &&<span className='mx-5'>Logout</span>}
             </button>
           </li>
         </ul>

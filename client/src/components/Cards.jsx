@@ -15,40 +15,29 @@ export const Cards = ({desc,userId,date,id,likes}) => {
     const UserState = useContext(userContext);
     const PostState = useContext(postContext);
     const {getUser} = UserState;
-    const {deletePost , likePost , posts,setPosts,getTimeline} = PostState;
+    const {deletePost , likePost , posts} = PostState;
     const [user, setUser] = useState({});
     const { decodedToken, isExpired } = useJwt(localStorage.getItem("auth-token"));
-   
+    
     
     useEffect(() => {
       getUser(userId).then((data)=>{
         setUser(data)
-        
       })
-      getTimeline().then((data)=>{
-        setPosts(data)
-        
-    })
       
-    }, [user,posts])
+      
+    }, [likes])
 
-    const handleDelete =async(id)=>{
-      getTimeline().then((data)=>{
-        setPosts(data)
-    })
-    await deletePost(id)
-    }
+    
     const handleLike = async(id)=>{
-      getTimeline().then((data)=>{
-        setPosts(data)
-    })
+     
       await likePost(id)
     }
     
   return (
     <div>
 
-<div key={user._id} className="p-0 my-0 border-b-2 w-[100%]">
+<div className="p-0 my-0 border-b-2 w-[100%]">
     
     <div className=" w-[100%] shadow-xl lg:flex">
       

@@ -18,7 +18,7 @@ router.post("/" , authorization , async (req, res) => {
   }
 });
 //UPDATE POST API
-router.put("/:id", async (req, res) => {
+router.put("/:id", authorization ,async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     !post && res.status(404).json({ success: false, error: "Post not found" });
@@ -76,7 +76,7 @@ router.put("/:id/like", authorization , async (req, res) => {
   }
 });
 //GET A POST API
-router.get("/:id/", async (req, res) => {
+router.get("/:id/", authorization ,async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if(!post) return res.status(404).json({ success: false, error: "Post not found" });

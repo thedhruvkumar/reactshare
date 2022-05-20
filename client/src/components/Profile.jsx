@@ -5,25 +5,26 @@ import postContext from "../context/posts/postContext";
 import VerifiedIcon from '@mui/icons-material/Verified';
 import ErrorIcon from '@mui/icons-material/Error';
 import Tooltip from "@mui/material/Tooltip";
+import { format } from 'timeago.js';
 import { Cards } from "./Cards";
 export const Profile = () => {
   const { userId } = useParams();
   const UserState = useContext(userContext);
   const PostState = useContext(postContext);
   const { getUser } = UserState;
-  const { getTimeline } = PostState;
+  const { getTimeline , posts } = PostState;
   const [user, setUser] = useState({});
   const [userPost, setUserPost] = useState([])
 
   useEffect(() => {
-    getUser(userId).then((data) => {
+      getUser(userId).then((data) => {
       setUser(data);
       
-    });
-    getTimeline().then((data)=>{
-      const profilePost = data.filter((post)=>post.userId === userId)
+      });
+
+      const profilePost = posts.filter((post)=>post.userId === userId)
       setUserPost(profilePost)
-    })
+   
   }, []);
 
 
@@ -43,6 +44,7 @@ export const Profile = () => {
             <p className="font-extrabold text-2xl">{user?.name} <span>{user.isVerified? <Tooltip title="Verified User"><VerifiedIcon style={{ color: "blue" }} /></Tooltip>:<ErrorIcon style={{ color: "red" }} />}</span></p>
             <p className="font-semibold text-sm text-gray-500">@{user.username}</p>
             <p className="mt-6" >{user.desc || "No Bio"}</p>
+            <p className="text-gray-500" >Joined {format(user.createdAt)}</p>
             <p className="flex mt-3"><span className="text-gray-700"> <span className="font-extrabold">{user.followings?.length}</span>  Followings</span> <span className="mx-4 text-gray-700"> <span className="font-extrabold">{user.followers?.length}</span>  Followers</span></p>
         </div>
 
