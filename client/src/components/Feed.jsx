@@ -8,12 +8,12 @@ export const Feed = () => {
 
     
     const postState = useContext(postContext);
-    const {getTimeline , posts , postLoading} = postState;
+    const {getTimeline , posts} = postState;
     
     
     useEffect(() => {
       getTimeline()
-    }, [])
+    }, [posts])
     
 
   return (
@@ -24,8 +24,8 @@ export const Feed = () => {
         <PostBox/>
         </div>
         <div className="w-[640px] ">
-        {postLoading && <div>Loading...</div>}
-        {!postLoading && posts.map((item)=>{
+        {!posts && <div>Loading...</div>}
+        {posts && posts.map((item)=>{
             return <div key={item._id}>
             <Cards id={item._id} desc={item.desc} userId={item.userId} likes={item.likes} date={item.createdAt}/>
             </div>

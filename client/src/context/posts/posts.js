@@ -6,13 +6,12 @@ const HOST = process.env.REACT_APP_HOST;
 
 const PostState =  (props) => {
   const [posts, setPosts] = useState([]);
-  const [postLoading, setPostLoading] = useState(false)
   const { decodedToken, isExpired } = useJwt(
     localStorage.getItem("auth-token")
   );
   const currUser = decodedToken?.user;
   const getTimeline = async () => {
-    setPostLoading(true)
+    
     const url = `${HOST}/api/posts/timeline/all/`;
     const data = await fetch(url, {
       method: "GET",
@@ -25,7 +24,7 @@ const PostState =  (props) => {
     const json = await data.json();
     if (json.length!==0) {
       setPosts(json);
-      setPostLoading(false)
+      
     }
     return json;
   };
@@ -42,8 +41,8 @@ const PostState =  (props) => {
     });
 
     const json = await data.json();
-    setPosts(...posts, json);
-    console.log(posts)
+    const np =posts.concat(json)
+    setPosts(np);
     return json;
   };
 
@@ -58,7 +57,7 @@ const PostState =  (props) => {
     });
 
     const json = await data.json();
-    setPosts(posts.filter((f) => f._id === id));
+    setPosts(posts.filter((f) => f._id !== id));
     return json;
   };
   const likePost = async (id) => {
@@ -91,7 +90,7 @@ const PostState =  (props) => {
   };
   return (
     <postContext.Provider
-      value={{ getTimeline, deletePost, createPost, likePost, posts, setPosts, postLoading }}
+      value={{ getTimeline, deletePost, createPost, likePost, posts, setPosts }}
     >
       {props.children}
     </postContext.Provider>

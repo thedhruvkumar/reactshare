@@ -17,7 +17,9 @@ export const Login = () => {
 
   useEffect(() => {
     
+    if(localStorage.getItem('auth-token')){
       navigate("/")
+    }
     
   }, [login])
   

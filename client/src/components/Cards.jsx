@@ -26,7 +26,7 @@ export const Cards = ({desc,userId,date,id,likes}) => {
       })
       
       
-    }, [likes])
+    })
 
     
     const handleLike = async(id)=>{

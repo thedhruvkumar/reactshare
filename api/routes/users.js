@@ -79,13 +79,13 @@ router.get("/:id", authorization , async (req, res) => {
 
 //FOLLOW USER API
 router.put("/:id/follow", authorization ,async (req, res) => {
-  if (req.body.userId !== req.params.id) {
+  if (req.user.id !== req.params.id) {
     try {
-      const currentUser = await User.findOne({ _id: req.body.userId });
+      const currentUser = await User.findOne({ _id: req.user.id });
       const user = await User.findById(req.params.id);
 
-      if (!user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $push: { followers: req.body.userId } });
+      if (!user.followers.includes(req.user.id)) {
+        await user.updateOne({ $push: { followers: req.user.id } });
         await currentUser.updateOne({ $push: { followings: req.params.id } });
         return res
           .status(200)
@@ -111,13 +111,13 @@ router.put("/:id/follow", authorization ,async (req, res) => {
 });
 //UNFOLLOW USER API
 router.put("/:id/unfollow", authorization , async (req, res) => {
-  if (req.body.userId !== req.params.id) {
+  if (req.user.id !== req.params.id) {
     try {
-      const currentUser = await User.findOne({ _id: req.body.userId });
+      const currentUser = await User.findOne({ _id: req.user.id });
       const user = await User.findById(req.params.id);
 
-      if (user.followers.includes(req.body.userId)) {
-        await user.updateOne({ $pull: { followers: req.body.userId } });
+      if (user.followers.includes(req.user.id)) {
+        await user.updateOne({ $pull: { followers: req.user.id } });
         await currentUser.updateOne({ $pull: { followings: req.params.id } });
         return res
           .status(200)

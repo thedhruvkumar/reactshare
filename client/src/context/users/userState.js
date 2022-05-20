@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import userContext from "./userContext";
 import { useJwt } from "react-jwt";
 
@@ -10,30 +10,68 @@ const UserState = (props) => {
     localStorage.getItem("auth-token")
   );
 
-  const getUser = async(id)=>{
+  const getUser = async (id) => {
     const url = `${HOST}/api/users/${id}`;
-    const data = await fetch(url,{
-        method:'GET',
-        headers:{'Content-Type': 'application/json',
-        'auth-token':localStorage.getItem('auth-token')}
-    })
+    const data = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
 
     const json = await data.json();
     return json;
-  }
+  };
 
-  const fetchCurrentUser = async()=>{
-    const url = `${HOST}/api/users/${decodedToken.id}`;
-    const data = await fetch(url,{
-        method:'GET',
-        headers:{'Content-Type': 'application/json',
-        'auth-token':localStorage.getItem('auth-token')}
-    })
+  const fetchCurrentUser = async () => {
+    
+    const url = `${HOST}/api/users/${decodedToken?.user?.id}`;
+    const data = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
     const json = await data.json();
     setCurrentUser(json);
-  }
+  };
+
+  const followUser = async (id) => {
+    const url = `${HOST}/api/users/${id}/follow`;
+    const data = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
+    const json = await data.json();
+    return json;
+  };
+  const unfollowUser = async (id) => {
+    const url = `${HOST}/api/users/${id}/unfollow`;
+    const data = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
+    const json = await data.json();
+    return json;
+  };
   return (
-    <userContext.Provider value={{ getUser , fetchCurrentUser , currentUser }}>
+    <userContext.Provider
+      value={{
+        getUser,
+        fetchCurrentUser,
+        currentUser,
+        followUser,
+        unfollowUser,
+      }}
+    >
       {props.children}
     </userContext.Provider>
   );
