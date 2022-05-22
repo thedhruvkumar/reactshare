@@ -12,7 +12,7 @@ export const Dashboard = () => {
       })
 
       
-    }, [user])
+    }, [])
     
 
 
@@ -41,8 +41,8 @@ export const Dashboard = () => {
           </tr>
         </thead>
         <tbody>
-        {user.map((elm)=>{
-      return <tr key={elm._id}>
+        {user && user.map((elm)=>{
+          return <tr key={elm._id}>
             <td className="px-4 py-3">{elm._id}</td>
             <td className="px-4 py-3">{elm.name}</td>
             <td className="px-4 py-3">{elm.username}</td>

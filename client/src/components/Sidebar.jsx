@@ -2,13 +2,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useJwt } from "react-jwt";
-import { useNavigate } from "react-router-dom";
+import { Navigate , useNavigate } from 'react-router-dom'
 
 export const Sidebar = ({isOpen,setOpen}) => {
   const { decodedToken } = useJwt(localStorage.getItem("auth-token"));
+  const user = localStorage.getItem('auth-token')
   const navigate = useNavigate();
 
   return (
+    <>
+    {!user && ( <Navigate to={'/login'} replace={true}/>)}
     <div className={`sidebar ${isOpen ? 'w-1/5' : 'w-1/12'}`}>
       <div className={`header text-2xl p-4 flex ${isOpen?"justify-between":"justify-center"} items-center`}>
             {isOpen && <span className='text-center dark:text-white'>ReactShare</span>}
@@ -63,9 +66,8 @@ export const Sidebar = ({isOpen,setOpen}) => {
               className="side-nav-btn w-full"
               onClick={() => {
                 localStorage.removeItem("auth-token");
-                setTimeout(() => {
-                  navigate("/login");
-                }, 1000);
+                navigate("/login")
+                
               }}
             >
               <FontAwesomeIcon icon="fas fa-sign-out" />{" "}
@@ -75,5 +77,6 @@ export const Sidebar = ({isOpen,setOpen}) => {
         </ul>
       </div>
     </div>
+  </>
   );
 };

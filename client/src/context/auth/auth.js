@@ -39,9 +39,13 @@ const AuthState = (props) => {
 
   const fetchAllUsers =async()=>{
     const url = `${HOST}/api/users/fetch/all`;
-    const data = await fetch(url);
+    const data = await fetch(url, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        "auth-token": localStorage.getItem("auth-token")
+      }});
     const resJson = await data.json();
-
     return resJson;
   }
 

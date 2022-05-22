@@ -15,7 +15,7 @@ import { Main } from "./components/Main";
 function App() {
   const authState = useContext(authContext);
   const { login } = authState;
-  const [isOpen, setOpen] = useState(true)
+  const [isOpen, setOpen] = useState(true);
 
   return (
     <>
@@ -31,45 +31,48 @@ function App() {
           draggable
           pauseOnHover
         />
-        <div className="flex w-full">
-          <Sidebar isOpen={isOpen} setOpen={setOpen}/>
-          <Routes>
-            <Route exact path="/" element={<Main isOpen={isOpen} setOpen={setOpen}/>}>
-              <Route
-                path="/"
-                element={
-                  <div className="flex w-full">
-                    <Feed/>
-                  </div>
-                }
-              />
-              <Route
-                path="acc/:userId"
-                element={
-                  <div className="flex w-full">
-                   <Profile/>
-                  </div>
-                }
-              />
-              <Route
-                path="sett"
-                element={
-                  <div className="flex w-full">
-                    <p className="text-white text-6xl">Settings</p>
-                  </div>
-                }
-              />
-              <Route
-                path="login"
-                element={
-                  <div className="flex w-full">
-                    <Login/>
-                  </div>
-                }
-              />
-            </Route>
-          </Routes>
-        </div>
+
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <div className="flex w-full">
+                <Sidebar isOpen={isOpen} setOpen={setOpen} />
+                <Main isOpen={isOpen} setOpen={setOpen} />
+              </div>
+            }
+          >
+            <Route
+              path="/"
+              element={
+                <div className="flex w-full">
+                  <Feed />
+                </div>
+              }
+            />
+            <Route
+              path="acc/:userId"
+              element={
+                <div className="flex w-full">
+                  <Profile />
+                </div>
+              }
+            />
+            <Route
+              path="sett"
+              element={
+                <div className="flex w-full">
+                  <p className="text-white text-6xl">Settings</p>
+                </div>
+              }
+            />
+          </Route>
+          {/*  --------------  */}
+          <Route exact path="dashboard" element={<Dashboard />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+        </Routes>
       </BrowserRouter>
     </>
   );

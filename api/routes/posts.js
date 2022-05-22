@@ -105,4 +105,16 @@ router.get("/timeline/all" , authorization , async (req, res) => {
   }
 });
 
+//GET USER'S ALL POSTS
+router.get("/posts/:userid" , authorization , async(req,res)=>{
+  try {
+    const userPost = await Post.find({userId:req.params.userid});
+    res.status(200).json(userPost.reverse());
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+})
+
 module.exports = router;

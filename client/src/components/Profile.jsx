@@ -11,8 +11,8 @@ export const Profile = () => {
   const { userId } = useParams();
   const UserState = useContext(userContext);
   const PostState = useContext(postContext);
-  const { getUser, fetchCurrentUser, currentUser, followUser, unfollowUser } =UserState;
-  const { posts , getTimeline } = PostState;
+  const { getUser, followUser, unfollowUser } =UserState;
+  const {  getUserPost } = PostState;
   const [user, setUser] = useState({});
   const [userPost, setUserPost] = useState([]);
 
@@ -20,20 +20,15 @@ export const Profile = () => {
     getUser(userId).then((data) => {
       setUser(data);
     });
-    fetchCurrentUser().then(()=>{
-      console.log(currentUser)
-    })
-    getTimeline().then((data)=>{
-      const profilePost = data.filter((post) => post.userId === userId);
-      setUserPost(profilePost);
+    getUserPost(userId).then((data)=>{
+      setUserPost(data);
 
     })
   }, []);
   const handleFollow = async (id) => {
-    if(currentUser.id!==user._id && !user.followers.includes(currentUser.id || !currentUser.followings.includes(user.id))){
-
+    
       await followUser(id);
-    }
+    
   };
 
   return (

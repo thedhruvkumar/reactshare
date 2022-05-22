@@ -52,7 +52,7 @@ router.delete("/:id", authorization ,async (req, res) => {
 //GET ALL USERS API
 router.get("/fetch/all" , authorization , async(req,res)=>{
   try {
-    const user = await User.find({}).select([
+    const user = await User.find().select([
       "-password",
       "-createdAt",
       "-updatedAt",

@@ -87,10 +87,25 @@ const PostState =  (props) => {
     setPosts(newPosts);
     
     return json;
-  };
+  }
+
+  const getUserPost = async(id)=>{
+       
+    const url = `${HOST}/api/posts/posts/${id}`;
+    const data = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
+    const json = await data.json();
+    return json;
+  }
+
   return (
     <postContext.Provider
-      value={{ getTimeline, deletePost, createPost, likePost, posts, setPosts }}
+      value={{ getTimeline, deletePost, createPost, likePost, posts, setPosts , getUserPost }}
     >
       {props.children}
     </postContext.Provider>

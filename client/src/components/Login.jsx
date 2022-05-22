@@ -2,29 +2,23 @@ import React,{useState,useContext,useEffect}  from 'react'
 import authContext from "../context/auth/authContext";
 import { toast } from 'react-toastify';
 import { CircularProgress } from "@mui/material";
-import {useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 
 export const Login = () => {
-  const navigate = useNavigate();
+  
   const authState = useContext(authContext);
-  const {authenticateUser,login} = authState;
+  const {authenticateUser} = authState;
   const [isLoading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email:"",
     password:""
   });
 
-  useEffect(() => {
-    
-    if(localStorage.getItem('auth-token')){
-      navigate("/")
-    }
-    
-  }, [login])
+ const user = localStorage.getItem('auth-token'); 
   
 
-  const handleChange = (e) =>{
+const handleChange = (e) =>{
     setFormData({...formData,[e.target.name]:e.target.value})
 }
 const handleClick =async()=>{
@@ -69,6 +63,7 @@ const handleClick =async()=>{
 
   return (
     <>
+    {user && (<Navigate to={'/'} replace={true}/>)}
     <div className='bg-slate-200 h-screen w-screen px-16 lg:flex justify-between items-center hidden'>
       <div className="left">
       <h1 className="text-4xl text-blue-600 my-2 font-extrabold">

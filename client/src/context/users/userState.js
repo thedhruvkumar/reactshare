@@ -5,7 +5,6 @@ import { useJwt } from "react-jwt";
 const HOST = process.env.REACT_APP_HOST;
 
 const UserState = (props) => {
-  const [currentUser, setCurrentUser] = useState({});
   const { decodedToken, isExpired } = useJwt(
     localStorage.getItem("auth-token")
   );
@@ -24,19 +23,6 @@ const UserState = (props) => {
     return json;
   };
 
-  const fetchCurrentUser = async () => {
-    
-    const url = `${HOST}/api/users/${decodedToken?.user?.id}`;
-    const data = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("auth-token"),
-      },
-    });
-    const json = await data.json();
-    setCurrentUser(json);
-  };
 
   const followUser = async (id) => {
     const url = `${HOST}/api/users/${id}/follow`;
@@ -66,8 +52,6 @@ const UserState = (props) => {
     <userContext.Provider
       value={{
         getUser,
-        fetchCurrentUser,
-        currentUser,
         followUser,
         unfollowUser,
       }}
