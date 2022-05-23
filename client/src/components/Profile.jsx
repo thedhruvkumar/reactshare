@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import userContext from "../context/users/userContext";
 import postContext from "../context/posts/postContext";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import ErrorIcon from "@mui/icons-material/Error";
 import Tooltip from "@mui/material/Tooltip";
 import { format } from "timeago.js";
 import { Cards } from "./Cards";
@@ -11,24 +10,30 @@ export const Profile = () => {
   const { userId } = useParams();
   const UserState = useContext(userContext);
   const PostState = useContext(postContext);
-  const { getUser, followUser, unfollowUser } =UserState;
-  const {  getUserPost } = PostState;
+  const { getUser, followUser, unfollowUser, realUser } = UserState;
+  const { getUserPost } = PostState;
   const [user, setUser] = useState({});
   const [userPost, setUserPost] = useState([]);
-
+  
   useEffect(() => {
     getUser(userId).then((data) => {
       setUser(data);
     });
-    getUserPost(userId).then((data)=>{
-      setUserPost(data);
+  }, [userId,user]);
 
-    })
+  
+
+  useEffect(() => {
+    getUserPost(userId).then((data) => {
+      setUserPost(data);
+    });
   }, []);
   const handleFollow = async (id) => {
-    
+    if (!user.followers.includes(realUser?.id)) {
       await followUser(id);
-    
+    } else if (user.followers.includes(realUser?.id)) {
+      await unfollowUser(id);
+    }
   };
 
   return (
@@ -48,12 +53,16 @@ export const Profile = () => {
               className="w-28 h-28 rounded-full border-4 border-blue-800 mx-8 "
               alt="userlogo"
             />
-            <button
-              className="px-14 py-3 mx-5 rounded-2xl bg-slate-900 text-white font-bold"
-              onClick={()=>{handleFollow(userId)}}
-            >
-              Follow
-            </button>
+            {realUser?.id !== user?._id && 
+              <button
+                className="px-14 py-3 mx-5 rounded-2xl bg-slate-900 text-white font-bold"
+                onClick={() => {
+                  handleFollow(userId);
+                }}
+              >
+                {user?.followers?.includes(realUser.id) ? "Following" : "Follow"}
+              </button>
+            }
           </div>
         </div>
         <div className="bg-white mt-10 py-4 px-11 border-b-2">
@@ -65,7 +74,7 @@ export const Profile = () => {
                   <VerifiedIcon style={{ color: "blue" }} />
                 </Tooltip>
               ) : (
-                <ErrorIcon style={{ color: "red" }} />
+                ""
               )}
             </span>
           </p>

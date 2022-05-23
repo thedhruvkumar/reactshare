@@ -98,7 +98,8 @@ router.get("/timeline/all" , authorization , async (req, res) => {
         return Post.find({ userId: friendId });
       })
       );
-    res.status(200).json(userPosts.concat(...friendPosts).reverse())
+      const resPost = userPosts.concat(...friendPosts);
+      res.status(200).json(resPost.sort((a,b)=> b.createdAt - a.createdAt))
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, error: "Internal Server Error" });
@@ -109,7 +110,7 @@ router.get("/timeline/all" , authorization , async (req, res) => {
 router.get("/posts/:userid" , authorization , async(req,res)=>{
   try {
     const userPost = await Post.find({userId:req.params.userid});
-    res.status(200).json(userPost.reverse());
+    res.status(200).json(userPost.sort((a,b)=> b.createdAt - a.createdAt));
     
   } catch (error) {
     console.log(error);

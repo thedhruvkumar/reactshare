@@ -8,7 +8,7 @@ require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 //UPDATE USER API
-router.put("/:id", authorization ,  async (req, res) => {
+router.put("/:id", authorization, async (req, res) => {
   if (req.body.userId === req.params.id) {
     if (req.body.password) {
       try {
@@ -32,7 +32,7 @@ router.put("/:id", authorization ,  async (req, res) => {
 });
 
 //DELETE USER API
-router.delete("/:id", authorization ,async (req, res) => {
+router.delete("/:id", authorization, async (req, res) => {
   if (req.user.id === req.params.id || req.user.isAdmin) {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
@@ -50,7 +50,7 @@ router.delete("/:id", authorization ,async (req, res) => {
 });
 
 //GET ALL USERS API
-router.get("/fetch/all" , authorization , async(req,res)=>{
+router.get("/fetch/all", authorization, async (req, res) => {
   try {
     const user = await User.find().select([
       "-password",
@@ -63,9 +63,8 @@ router.get("/fetch/all" , authorization , async(req,res)=>{
   }
 });
 
-
 //GET A USER API
-router.get("/:id", authorization , async (req, res) => {
+router.get("/:id", authorization, async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select([
       "-password",
@@ -78,7 +77,7 @@ router.get("/:id", authorization , async (req, res) => {
 });
 
 //FOLLOW USER API
-router.put("/:id/follow", authorization ,async (req, res) => {
+router.put("/:id/follow", authorization, async (req, res) => {
   if (req.user.id !== req.params.id) {
     try {
       const currentUser = await User.findOne({ _id: req.user.id });
@@ -87,12 +86,10 @@ router.put("/:id/follow", authorization ,async (req, res) => {
       if (!user.followers.includes(req.user.id)) {
         await user.updateOne({ $push: { followers: req.user.id } });
         await currentUser.updateOne({ $push: { followings: req.params.id } });
-        return res
-          .status(200)
-          .json({
-            success: true,
-            message: "User has been followed successfully",
-          });
+        return res.status(200).json({
+          success: true,
+          message: "User has been followed successfully",
+        });
       } else {
         return res
           .status(403)
@@ -110,7 +107,7 @@ router.put("/:id/follow", authorization ,async (req, res) => {
   }
 });
 //UNFOLLOW USER API
-router.put("/:id/unfollow", authorization , async (req, res) => {
+router.put("/:id/unfollow", authorization, async (req, res) => {
   if (req.user.id !== req.params.id) {
     try {
       const currentUser = await User.findOne({ _id: req.user.id });
@@ -119,12 +116,10 @@ router.put("/:id/unfollow", authorization , async (req, res) => {
       if (user.followers.includes(req.user.id)) {
         await user.updateOne({ $pull: { followers: req.user.id } });
         await currentUser.updateOne({ $pull: { followings: req.params.id } });
-        return res
-          .status(200)
-          .json({
-            success: true,
-            message: "User has been unfollowed successfully",
-          });
+        return res.status(200).json({
+          success: true,
+          message: "User has been unfollowed successfully",
+        });
       } else {
         return res
           .status(403)
@@ -139,6 +134,15 @@ router.put("/:id/unfollow", authorization , async (req, res) => {
     return res
       .status(403)
       .json({ success: false, message: "You cant unfollow your self" });
+  }
+});
+
+//USERINFO BY TOKEN
+router.post("/u/", authorization, async (req, res) => {
+  try {
+    res.status(200).json(req.user)
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
 

@@ -13,18 +13,14 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 export const Cards = ({ desc, userId, date, id, likes }) => {
   const UserState = useContext(userContext);
   const PostState = useContext(postContext);
-  const { getUser } = UserState;
+  const { getUser , realUser } = UserState;
   const { deletePost, likePost} = PostState;
   const [user, setUser] = useState({});
-  const { decodedToken } = useJwt(
-    localStorage.getItem("auth-token")
-  );
-
   useEffect(() => {
     getUser(userId).then((data) => {
       setUser(data);
     });
-  });
+  },[]);
 
   const handleLike = async (id) => {
     await likePost(id);
@@ -75,7 +71,7 @@ export const Cards = ({ desc, userId, date, id, likes }) => {
                 onClick={() => handleLike(id)}
                 className="font-semibold rounded-md p-3 hover:bg-blue-100 hover:text-blue-600"
               >
-                {likes.includes(decodedToken?.user?.id) ? (
+                {likes.includes(realUser?.id) ? (
                   <ThumbUpIcon />
                 ) : (
                   <ThumbUpOffAltIcon />

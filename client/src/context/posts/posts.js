@@ -24,7 +24,6 @@ const PostState =  (props) => {
     const json = await data.json();
     if (json.length!==0) {
       setPosts(json);
-      
     }
     return json;
   };

@@ -45,7 +45,7 @@ const handleClick =async()=>{
   
         
     }else{
-      toast.error('An Error Occured', {
+      toast.error(jsonData.error, {
         position: "top-left",
         autoClose: 5000,
         hideProgressBar: false,

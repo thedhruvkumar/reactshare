@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import userContext from "./userContext";
-import { useJwt } from "react-jwt";
+
 
 const HOST = process.env.REACT_APP_HOST;
 
 const UserState = (props) => {
-  const { decodedToken, isExpired } = useJwt(
-    localStorage.getItem("auth-token")
-  );
+  const [realUser, setrealUser] = useState({})
+  const loadUser = async()=>{
+    if(localStorage.getItem("auth-token")){
+
+      const data = await fetch('http://localhost:5000/api/users/u' , {
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("auth-token"),
+        }
+      })
+      const res = await data.json();
+      setrealUser(res)
+
+    }
+  }
 
   const getUser = async (id) => {
     const url = `${HOST}/api/users/${id}`;
@@ -54,6 +67,9 @@ const UserState = (props) => {
         getUser,
         followUser,
         unfollowUser,
+        loadUser,
+        realUser,
+        setrealUser
       }}
     >
       {props.children}

@@ -12,8 +12,10 @@ export const Feed = () => {
     
     
     useEffect(() => {
-      getTimeline()
-    }, [posts])
+      if(localStorage.getItem("auth-token")){
+        getTimeline()
+      }
+    }, [])
     
 
   return (

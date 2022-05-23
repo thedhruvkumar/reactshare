@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import authContext from "./context/auth/authContext";
+import { useContext, useState , useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,11 +10,17 @@ import { Feed } from "./components/Feed";
 import { Profile } from "./components/Profile";
 import { Sidebar } from "./components/Sidebar";
 import { Main } from "./components/Main";
+import userContext from "./context/users/userContext";
 
 function App() {
-  const authState = useContext(authContext);
-  const { login } = authState;
+  
   const [isOpen, setOpen] = useState(true);
+  const userState = useContext(userContext);
+  const {loadUser} = userState;
+  useEffect(() => {
+    loadUser()
+  }, [])
+  
 
   return (
     <>
@@ -63,7 +68,7 @@ function App() {
               path="sett"
               element={
                 <div className="flex w-full">
-                  <p className="text-white text-6xl">Settings</p>
+                  <p className="text-6xl">Settings</p>
                 </div>
               }
             />
