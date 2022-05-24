@@ -4,7 +4,6 @@ import postContext from "../context/posts/postContext";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { Link } from "react-router-dom";
 import { format } from "timeago.js";
-import { useJwt } from "react-jwt";
 import Tooltip from "@mui/material/Tooltip";
 import PostMenu from "./PostMenu";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
@@ -24,6 +23,7 @@ export const Cards = ({ desc, userId, date, id, likes }) => {
 
   const handleLike = async (id) => {
     await likePost(id);
+    
   };
 
   return (

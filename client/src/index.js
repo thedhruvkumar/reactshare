@@ -8,7 +8,7 @@ import PostState from "./context/posts/posts";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faHome , faUserCircle , faCog, faSignOut, faBars , faSearch} from '@fortawesome/free-solid-svg-icons'
-library.add(fab ,faHome , faUserCircle , faCog , faSignOut , faBars , faSearch)
+library.add(fab ,faHome , faUserCircle , faCog , faSignOut , faBars , faSearch )
 
 
 
