@@ -11,6 +11,7 @@ import { Profile } from "./components/Profile";
 import { Sidebar } from "./components/Sidebar";
 import { Main } from "./components/Main";
 import userContext from "./context/users/userContext";
+import { SearchResult } from "./components/SearchResult";
 
 function App() {
   
@@ -72,11 +73,20 @@ function App() {
                 </div>
               }
             />
+            <Route
+              path="search/:query"
+              element={
+                <div className="flex w-full">
+                  <SearchResult/>
+                </div>
+              }
+            />
           </Route>
           {/*  --------------  */}
           <Route exact path="dashboard" element={<Dashboard />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

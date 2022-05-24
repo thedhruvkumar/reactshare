@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const jwt = require("jsonwebtoken");
+const mongoose = require('mongoose')
 const bcrypt = require("bcrypt");
 const authorization = require("../middleware/authorization");
 const { body, validationResult } = require("express-validator");
@@ -66,10 +67,13 @@ router.get("/fetch/all", authorization, async (req, res) => {
 //GET A USER API
 router.get("/:id", authorization, async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select([
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).json({ success: false, error: "User Not Found" });
+
+    const user = await User.findOne({_id:req.params.id}).select([
       "-password",
       "-updatedAt",
     ]);
+    if(!user) return res.status(400).json({ success: false, error: "User Not Found" })
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ success: false, error: "Internal Server Error" });
