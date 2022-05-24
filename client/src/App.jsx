@@ -76,7 +76,7 @@ function App() {
             <Route
               path="search/:query"
               element={
-                <div className="flex w-full">
+                <div className="w-full">
                   <SearchResult/>
                 </div>
               }
