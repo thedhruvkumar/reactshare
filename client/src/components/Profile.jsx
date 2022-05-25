@@ -24,6 +24,7 @@ export const Profile = () => {
       } else {
         setUser(data);
       }
+      
     });
     
   }, [userId, key]);
@@ -48,8 +49,8 @@ export const Profile = () => {
     <>
       {!user && <div>No User Found</div>}
       {user && (
-        <div key={userId} className="px-32 h-screen ">
-          <div className="h-full w-full bg-white shadow-xl">
+        <div key={userId} className="lg:px-32 h-auto p-2">
+          <div className="h-auto w-full bg-white shadow-xl rounded-lg overflow-hidden">
             <div className="relative">
               <div className="banner w-full h-80">
                 <img
@@ -66,7 +67,7 @@ export const Profile = () => {
                 />
                 {realUser?.id !== user?._id && (
                   <button
-                    className="px-14 py-3 mx-5 rounded-2xl bg-slate-900 text-white font-bold"
+                    className="lg:px-14 lg:py-3 lg:mx-5 p-3 rounded-2xl bg-slate-900 text-white font-bold"
                     onClick={() => {
                       handleFollow(userId);
                     }}
@@ -96,7 +97,7 @@ export const Profile = () => {
               </p>
               <p className="mt-6">{user.desc || "No Bio"}</p>
               <p className="text-gray-500">Joined {format(user.createdAt)}</p>
-              <p className="flex mt-3">
+              <p className="flex mt-3 mb-3">
                 <span className="text-gray-700">
                   {" "}
                   <span className="font-extrabold">
@@ -114,6 +115,7 @@ export const Profile = () => {
               </p>
             </div>
 
+          </div>
             <div className="mt-5">
               {userPost &&
                 userPost.map((item) => {
@@ -130,7 +132,6 @@ export const Profile = () => {
                   );
                 })}
             </div>
-          </div>
         </div>
       )}
     </>

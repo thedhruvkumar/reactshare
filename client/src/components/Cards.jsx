@@ -28,9 +28,9 @@ export const Cards = ({ desc, userId, date, id, likes }) => {
 
   return (
     <div>
-      {user && <div className="p-0 my-0 border-b-2 w-[100%]">
-        <div className=" w-[100%] shadow-xl lg:flex">
-          <div className="bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-[100%]">
+      {user && <div className="p-0 my-4 border-b-2 w-full overflow-hidden rounded-lg shadow-lg">
+        <div className=" w-[100%] lg:flex">
+          <div className="bg-white rounded-lg p-4 flex flex-col justify-between leading-normal w-[100%]">
             <div className="flex items-center relative">
               <img
                 className="w-10 h-10 rounded-full mr-4"

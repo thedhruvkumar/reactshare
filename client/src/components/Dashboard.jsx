@@ -1,9 +1,13 @@
 import React , {useContext,useEffect,useState} from 'react'
 import authContext from '../context/auth/authContext';
+import userContext from "../context/users/userContext";
+import { Navigate } from 'react-router-dom';
 
 export const Dashboard = () => {
     const authState = useContext(authContext);
+    const UserState = useContext(userContext);
     const {fetchAllUsers,deleteUser} = authState;
+    const { realUser } = UserState;
     const [user, setUser] = useState([]);
     
     useEffect(() => {
@@ -21,9 +25,9 @@ export const Dashboard = () => {
 
     
    
-
-   <section className="text-gray-600 body-font">
-  <div className="container px-5 py-24 mx-auto">
+{!realUser?.isAdmin && <Navigate to={'/'} replace={true}/>}
+   {realUser?.isAdmin && <section className="text-gray-600 body-font w-full">
+  <div className="container lg:px-5 lg:py-24 p-0 mx-auto">
     <div className="flex flex-col text-center w-full mb-20">
       <h1 className="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Users Dashboard</h1>
       <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Manage User Account</p>
@@ -56,7 +60,7 @@ export const Dashboard = () => {
     </div>
     
   </div>
-</section>
+</section>}
     </>
   )
 }

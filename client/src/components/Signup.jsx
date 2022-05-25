@@ -56,7 +56,7 @@ export const Signup = () => {
   }
 
   return (
-    <div className="flex justify-center items-center bg-slate-200 w-[100%] h-[100vh]">
+    <div className="flex justify-center items-center bg-slate-200 w-[100%] h-[100vh] lg:p-0 px-3">
       <div className="shadow-2xl bg-white w-[460px] p-9 rounded-md">
         <div className="text-xl border-b-2 pb-4 text-center font-bold ">
           <span>Sign up now</span>

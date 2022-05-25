@@ -41,7 +41,7 @@ const PostState =  (props) => {
 
     const json = await data.json();
     const np =posts.concat(json)
-    setPosts(np);
+    setPosts(np.sort((a,b)=>b.createdAt - a.createdAt));
     return json;
   };
 

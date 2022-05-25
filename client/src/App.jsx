@@ -20,6 +20,9 @@ function App() {
   const {loadUser} = userState;
   useEffect(() => {
     loadUser()
+    if(window.innerWidth <=1024){
+      setOpen(false)
+    }
   }, [])
   
 
