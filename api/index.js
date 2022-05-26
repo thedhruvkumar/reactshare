@@ -6,7 +6,11 @@ const fs = require("fs");
 require("dotenv").config();
 connectDB();
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  origin: process.env.ORIGIN,
+  optionsSuccessStatus: 200 
+}
+app.use(cors(corsOptions));
 app.use(
   express.urlencoded({
     extended: true,
