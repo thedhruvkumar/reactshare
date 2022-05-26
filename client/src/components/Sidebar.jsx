@@ -8,6 +8,13 @@ export const Sidebar = ({isOpen,setOpen}) => {
   const { decodedToken } = useJwt(localStorage.getItem("auth-token"));
   const user = localStorage.getItem('auth-token')
   const navigate = useNavigate();
+  const mobclick = () =>{
+    if(window.innerWidth <=1024){
+      setOpen(false)
+    }
+  }
+ 
+ 
 
   return (
     <>
@@ -21,6 +28,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
         <ul className="space-y-6 xl:px-3 xl:py-2 p-1">
           <li>
             <NavLink
+            onClick={mobclick}
               to={"/"}
               className="side-nav-btn"
               style={({ isActive }) =>
@@ -35,6 +43,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
           </li>
           <li>
             <NavLink
+            onClick={mobclick}
               to={`acc/${decodedToken?.user?.id}`}
               className="side-nav-btn"
               style={({ isActive }) =>
@@ -49,6 +58,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
           </li>
           <li>
             <NavLink
+            onClick={mobclick}
               to={"/sett"}
               className="side-nav-btn"
               style={({ isActive }) =>
