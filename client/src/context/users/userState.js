@@ -7,8 +7,9 @@ const UserState = (props) => {
   const [realUser, setrealUser] = useState({});
   const loadUser = async () => {
     if (localStorage.getItem("auth-token")) {
-      const data = await fetch("http://localhost:5000/api/users/u", {
+      const data = await fetch(`${HOST}/api/users/u`, {
         method: "POST",
+        mode: "cors",
         headers: {
           "Content-Type": "application/json",
           "auth-token": localStorage.getItem("auth-token"),
@@ -23,6 +24,7 @@ const UserState = (props) => {
     const url = `${HOST}/api/users/${id}`;
     const data = await fetch(url, {
       method: "GET",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("auth-token"),
@@ -36,6 +38,7 @@ const UserState = (props) => {
     const url = `${HOST}/api/users/fetch/all`;
     const data = await fetch(url, {
       method: "GET",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("auth-token"),
@@ -50,6 +53,7 @@ const UserState = (props) => {
     const url = `${HOST}/api/users/${id}/follow`;
     const data = await fetch(url, {
       method: "PUT",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("auth-token"),
@@ -62,6 +66,7 @@ const UserState = (props) => {
     const url = `${HOST}/api/users/${id}/unfollow`;
     const data = await fetch(url, {
       method: "PUT",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("auth-token"),

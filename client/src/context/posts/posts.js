@@ -15,6 +15,7 @@ const PostState =  (props) => {
     const url = `${HOST}/api/posts/timeline/all/`;
     const data = await fetch(url, {
       method: "GET",
+      mode: 'cors',
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("auth-token"),
@@ -32,6 +33,7 @@ const PostState =  (props) => {
     const url = `${HOST}/api/posts/`;
     const data = await fetch(url, {
       method: "POST",
+      mode: 'cors',
       headers: {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("auth-token"),
@@ -48,6 +50,7 @@ const PostState =  (props) => {
   const deletePost = async (id) => {
     const url = `${HOST}/api/posts/${id}`;
     const data = await fetch(url, {
+      mode: 'cors',
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -63,6 +66,7 @@ const PostState =  (props) => {
     
     const url = `${HOST}/api/posts/${id}/like`;
     const data = await fetch(url, {
+      mode: 'cors',
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -92,6 +96,7 @@ const PostState =  (props) => {
        
     const url = `${HOST}/api/posts/posts/${id}`;
     const data = await fetch(url, {
+      mode: 'cors',
       method: "GET",
       headers: {
         "Content-Type": "application/json",

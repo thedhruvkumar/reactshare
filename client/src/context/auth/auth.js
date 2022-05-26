@@ -28,6 +28,7 @@ const AuthState = (props) => {
     };
     const data = await fetch(url, {
       method: "POST",
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -41,6 +42,7 @@ const AuthState = (props) => {
     const url = `${HOST}/api/users/fetch/all`;
     const data = await fetch(url, {
       method: "GET",
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem("auth-token")
@@ -53,6 +55,7 @@ const AuthState = (props) => {
     const url = `${HOST}/api/auth/login/`;
     const data = await fetch(url, {
       method: "POST",
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -66,6 +69,7 @@ const AuthState = (props) => {
     const url = `${HOST}/api/users/${userid}`;
     const data = await fetch(url, {
       method: "DELETE",
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
         'auth-token':localStorage.getItem('auth-token')
