@@ -25,7 +25,7 @@ export const Dashboard = () => {
 
     
    
-{!realUser?.isAdmin && <Navigate to={'/'} replace={true}/>}
+{realUser?.isAdmin && <Navigate to={'/'} replace={true}/>}
    {realUser?.isAdmin && <section className="text-gray-600 body-font w-full">
   <div className="container lg:px-5 lg:py-24 p-0 mx-auto">
     <div className="flex flex-col text-center w-full mb-20">
