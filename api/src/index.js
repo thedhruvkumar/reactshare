@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const connectDB = require("./db");
+const connectDB = require("../db");
 const fs = require("fs");
 require("dotenv").config();
 connectDB();
@@ -16,12 +16,12 @@ app.use(
     extended: true,
   })
 );
-fs.readdir("./routes", async (err, files) => {
-  if (err) throw new err();
+fs.readdir("../routes", async (err, files) => {
+  if (err) return false;
   files.forEach((file) => {
     app.use(
       `/api/${file.split(".")[0].toLowerCase()}/`,
-      require(`./routes/${file}`)
+      require(`../routes/${file}`)
     );
   });
 });
