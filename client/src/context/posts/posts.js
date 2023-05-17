@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import postContext from "./postContext";
 import { useJwt } from "react-jwt";
 
-const HOST = `https://determined-pleat-worm.cyclic.app`;
+const HOST = `http://localhost:3001`;
 
 const PostState =  (props) => {
   const [posts, setPosts] = useState([]);

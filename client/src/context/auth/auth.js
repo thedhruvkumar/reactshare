@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from "react";
 import authContext from "./authContext";
 
-const HOST = `https://determined-pleat-worm.cyclic.app`;
+const HOST = `http://localhost:3001`;
 
 const AuthState = (props) => {
   const [login, setLogin] = useState(false)
