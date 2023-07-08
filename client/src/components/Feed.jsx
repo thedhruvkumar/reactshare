@@ -19,7 +19,7 @@ export const Feed = () => {
     
 
   return (
-    <div className='bg-slate-100 w-full h-100% overflow-auto flex items-center flex-col lg:p-0 p-2'>
+    <div className='bg-slate-100 w-full h-screen overflow-auto flex items-center flex-col lg:p-0 p-2'>
         <div className='my-8'>
 
         <div className="lg:w-[640px] w-full mb-16">

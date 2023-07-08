@@ -16,14 +16,15 @@ export const Login = () => {
   });
 
  const user = localStorage.getItem('auth-token'); 
-  
+
 
 const handleChange = (e) =>{
     setFormData({...formData,[e.target.name]:e.target.value})
 }
 const handleClick =async()=>{
-  setLoading(true)
-  const jsonData = await authenticateUser(formData.email,formData.password);
+  try {
+    setLoading(true)
+    const jsonData = await authenticateUser(formData.email,formData.password);
   if(jsonData.success){
     
     toast.success('Authenticated Successfully', {
@@ -52,7 +53,22 @@ const handleClick =async()=>{
       progress: undefined,
       });
       setLoading(false)
-  }
+    }
+  } catch (error) {
+    toast.error(error, {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+      setLoading(false)
+    
+    }
+    
+    
 
 }
 
@@ -96,7 +112,7 @@ const handleClick =async()=>{
 
         </div>
         <div className='border-t-2 px-4 py-2'>
-          <button className="bg-green-500 px-5 py-3 text-white my-3 w-[100%] font-semibold rounded-md text-xl hover:bg-green-700">Create a new Account</button>
+          <a href='/signup' className="w-full block text-center bg-green-500 px-5 py-3 text-white my-3 font-semibold rounded-md text-xl hover:bg-green-700">Create a new Account</a>
         </div>
         </div>
     </div>

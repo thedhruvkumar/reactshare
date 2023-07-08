@@ -21,7 +21,7 @@ export const Sidebar = ({isOpen,setOpen}) => {
     {!user && ( <Navigate to={'/login'} replace={true}/>)}
     <div className={`sidebar ${isOpen ? 'lg:w-1/5 left-0 w-full' : 'lg:w-1/12 -left-96 lg:left-0 lg:block'}`}>
       <div className={`header text-2xl p-4 flex ${isOpen?"justify-between":"justify-center"} items-center`}>
-            {isOpen && <span className='text-center dark:text-white'>ReactShare</span>}
+            {isOpen && <span className='text-center'>ReactShare</span>}
             <button className='transition-all duration-500 text-center' onClick={()=> setOpen(!isOpen)}><FontAwesomeIcon icon="fas fa-bars" /></button>
         </div>
       <div className="mt-6">
