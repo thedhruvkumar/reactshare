@@ -1,4 +1,4 @@
-import React,{useState,useContext,useEffect}  from 'react'
+import React,{useState,useContext}  from 'react'
 import authContext from "../context/auth/authContext";
 import { toast } from 'react-toastify';
 import { CircularProgress } from "@mui/material";
@@ -24,40 +24,35 @@ const handleChange = (e) =>{
 const handleClick =async()=>{
   setLoading(true)
   const jsonData = await authenticateUser(formData.email,formData.password);
-  
- 
-  setTimeout(async() => {
+  if(jsonData.success){
     
-    if(jsonData.success){
+    toast.success('Authenticated Successfully', {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+      setLoading(false);
+      localStorage.setItem("auth-token",jsonData.authtoken)
+      // setLoading(false)
       
-      toast.success('Authenticated Successfully', {
-        position: "top-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-        setLoading(false);
-        localStorage.setItem("auth-token",jsonData.authtoken)
-        
-  
-        
-    }else{
-      toast.error(jsonData.error, {
-        position: "top-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
-        setLoading(false)
-    }
-    
-  }, 1000);
+
+      
+  }else{
+    toast.error(jsonData.error, {
+      position: "top-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+      setLoading(false)
+  }
 
 }
 

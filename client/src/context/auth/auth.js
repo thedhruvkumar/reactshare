@@ -52,14 +52,13 @@ const AuthState = (props) => {
   }
 
   const authenticateUser = async (email,password) =>{
-    const url = `${HOST}/api/auth/login/`;
+    const url = `${HOST}/api/auth/login`;
     const data = await fetch(url, {
       method: "POST",
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({email,password}),
+      body: JSON.stringify({email:email,password:password}),
     });
     const json = await data.json();
     return json;

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/Users");
 require("dotenv").config();
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || "MY_SECRET_KEY";
 
 //Register a new user to the database
 router.post(

@@ -2,7 +2,7 @@
   "name": "api",
   "version": "1.0.0",
   "description": "backend api for react-social-app",
-  "main": "src/index.js",
+  "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "node .",
