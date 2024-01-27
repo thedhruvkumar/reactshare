@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 async function connectDB() {
   try {
-    mongoose.connect("mongodb://127.0.0.1:27017/reactshare", {
+    mongoose.connect("mongodb+srv://admin:admin@prodb.8gnxpze.mongodb.net/reactshare?retryWrites=true&w=majority", {
       useUnifiedTopology: true,
       useNewUrlParser: true
     });
