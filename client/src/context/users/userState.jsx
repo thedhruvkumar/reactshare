@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import userContext from "./userContext";
 
-const HOST =  process.env.REACT_APP_HOST || `http://localhost:3001`;
+const HOST = `https://determined-pleat-worm.cyclic.app`;
 
 const UserState = (props) => {
   const [realUser, setrealUser] = useState({});
