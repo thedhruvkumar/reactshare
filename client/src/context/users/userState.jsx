@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import userContext from "./userContext";
 
-const HOST = `http://localhost:3001`;
+const HOST =  process.env.REACT_APP_HOST || `http://localhost:3001`;
 
 const UserState = (props) => {
   const [realUser, setrealUser] = useState({});
