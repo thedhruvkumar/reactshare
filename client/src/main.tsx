@@ -3,12 +3,15 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-// @ts-expect-error
-import AuthState from "./context/auth/auth.jsx";
-// @ts-expect-error
-import UserState from "./context/users/userState.jsx";
-// @ts-expect-error
-import PostState from "./context/posts/posts.jsx";
+import '@radix-ui/themes/styles.css';
+import { Theme } from '@radix-ui/themes';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
+import AuthState from "./context/auth/auth";
+import UserState from "./context/users/userState";
+import PostState from "./context/posts/posts";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -16,6 +19,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { faHome , faUserCircle , faCog, faSignOut, faBars , faSearch} from '@fortawesome/free-solid-svg-icons'
 library.add(fab ,faHome , faUserCircle , faCog , faSignOut , faBars , faSearch )
 
+const queryClient = new QueryClient()
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -23,7 +27,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <AuthState>
       <UserState>
         <PostState>
-          <App />
+          <Theme>
+              <QueryClientProvider client={queryClient}>
+                  <App /> 
+              </QueryClientProvider> 
+          </Theme>
         </PostState>
       </UserState>
     </AuthState>
