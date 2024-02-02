@@ -1,2 +1,5 @@
-# react-social-app
-Coming soon
+# ReactShare
+
+## Root Dir
+- Client
+- Api
