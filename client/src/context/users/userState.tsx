@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import userContext from "./userContext";
+import React, { useState , createContext, useContext} from "react";
 
-const HOST = `https://determined-pleat-worm.cyclic.app`;
+export const userContext = createContext<unknown | undefined>(undefined);
 
-const UserState = (props) => {
+
+const HOST =  import.meta.env.VITE_APP_SERVER_HOST || `http://localhost:3001`;
+
+const UserState = ({children}:{children:React.ReactNode}) => {
   const [realUser, setrealUser] = useState({});
   const loadUser = async () => {
     if (localStorage.getItem("auth-token")) {
@@ -12,7 +14,7 @@ const UserState = (props) => {
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("auth-token"),
+          "auth-token":  `${localStorage.getItem("auth-token")}`,
         },
       });
       const res = await data.json();
@@ -20,14 +22,14 @@ const UserState = (props) => {
     }
   };
 
-  const getUser = async (id) => {
+  const getUser = async (id:string) => {
     const url = `${HOST}/api/users/${id}`;
     const data = await fetch(url, {
       method: "GET",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("auth-token"),
+        "auth-token": `${localStorage.getItem("auth-token")}`,
       },
     });
 
@@ -41,7 +43,7 @@ const UserState = (props) => {
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("auth-token"),
+        "auth-token": `${localStorage.getItem("auth-token")}`,
       },
     });
 
@@ -49,27 +51,27 @@ const UserState = (props) => {
     return json;
   };
 
-  const followUser = async (id) => {
+  const followUser = async (id:string) => {
     const url = `${HOST}/api/users/${id}/follow`;
     const data = await fetch(url, {
       method: "PUT",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("auth-token"),
+        "auth-token": `${localStorage.getItem("auth-token")}`,
       },
     });
     const json = await data.json();
     return json;
   };
-  const unfollowUser = async (id) => {
+  const unfollowUser = async (id:string) => {
     const url = `${HOST}/api/users/${id}/unfollow`;
     const data = await fetch(url, {
       method: "PUT",
       mode: "cors",
       headers: {
         "Content-Type": "application/json",
-        "auth-token": localStorage.getItem("auth-token"),
+        "auth-token": `${localStorage.getItem("auth-token")}`,
       },
     });
     const json = await data.json();
@@ -87,9 +89,17 @@ const UserState = (props) => {
         setrealUser,
       }}
     >
-      {props.children}
+      {children}
     </userContext.Provider>
   );
 };
 
 export default UserState;
+
+
+export function useUserContext(){
+  const auth = useContext(userContext);
+  if(auth===undefined) throw new Error("PostContext Undefined");
+
+  return auth;
+}

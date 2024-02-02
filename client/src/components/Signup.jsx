@@ -1,35 +1,37 @@
-import React,{useState,useContext} from "react";
+import React, { useState } from "react";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import authContext from "../context/auth/authContext";
-import { toast } from 'react-toastify';
+import { useAuth } from "../context/auth/auth";
+import { toast } from "react-toastify";
 import { CircularProgress } from "@mui/material";
+import { Navigate } from "react-router-dom";
 
 export const Signup = () => {
-  const authState = useContext(authContext);
-  const {createUser} = authState;
+  const { createUser } = useAuth();
 
-  const [isLoading, setLoading] = useState(false)
-
+  const [isLoading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
-    name:"",
-    username:"",
-    email:"",
-    password:""
-  })
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const handleChange = (e) =>{
-      setFormData({...formData,[e.target.name]:e.target.value})
-  }
-  const handleClick =async()=>{
-    setLoading(true)
-    const jsonData = await createUser(formData.name,formData.username,formData.email,formData.password);
-   
-    setTimeout(async() => {
-      
-      if(jsonData.success){
-        
-        toast.success('Account Created Successfully', {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleClick = async () => {
+    setLoading(true);
+    const jsonData = await createUser(
+      formData.name,
+      formData.username,
+      formData.email,
+      formData.password
+    );
+
+    setTimeout(async () => {
+      if (jsonData.success) {
+        toast.success("Account Created Successfully", {
           position: "top-left",
           autoClose: 5000,
           hideProgressBar: false,
@@ -37,10 +39,10 @@ export const Signup = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
-          setLoading(false);
-      }else{
-        toast.error('An Error Occured', {
+        });
+        setLoading(false);
+      } else {
+        toast.error("An Error Occured", {
           position: "top-left",
           autoClose: 5000,
           hideProgressBar: false,
@@ -48,12 +50,13 @@ export const Signup = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
-          setLoading(false)
+        });
+        setLoading(false);
       }
     }, 1000);
+  };
 
-  }
+  if(localStorage.getItem('auth-token')) return Navigate({to:'/'});
 
   return (
     <div className="flex justify-center items-center bg-slate-200 w-[100%] h-[100vh] lg:p-0 px-3">
@@ -96,8 +99,23 @@ export const Signup = () => {
           id="password"
           onChange={handleChange}
         />
-        <button disabled={isLoading?true:false} onClick={handleClick} className="px-6 py-4 w-[100%] bg-green-600 disabled:opacity-70 rounded-md hover:shadow-2xl text-white font-bold hover:bg-green-700">
-          {isLoading?<span><CircularProgress size={'1rem'} color="inherit" className="mx-2"/>Signing up...</span>:"Sign up"}
+        <button
+          disabled={isLoading ? true : false}
+          onClick={handleClick}
+          className="px-6 py-4 w-[100%] bg-green-600 disabled:opacity-70 rounded-md hover:shadow-2xl text-white font-bold hover:bg-green-700"
+        >
+          {isLoading ? (
+            <span>
+              <CircularProgress
+                size={"1rem"}
+                color="inherit"
+                className="mx-2"
+              />
+              Signing up...
+            </span>
+          ) : (
+            "Sign up"
+          )}
         </button>
       </div>
     </div>

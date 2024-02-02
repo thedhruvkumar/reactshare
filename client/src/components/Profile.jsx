@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import userContext from "../context/users/userContext";
-import postContext from "../context/posts/postContext";
+import { useUserContext } from "../context/users/userState";
+import { usePostContext } from "../context/posts/posts";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import Tooltip from "@mui/material/Tooltip";
 import { format } from "timeago.js";
@@ -9,9 +9,9 @@ import { Cards } from "./Cards";
 
 export const Profile = () => {
   const { userId } = useParams();
-  const UserState = useContext(userContext);
-  const PostState = useContext(postContext);
+  const UserState = useUserContext();
   const { getUser, followUser, unfollowUser, realUser } = UserState;
+  const PostState = usePostContext();
   const { getUserPost } = PostState;
   const [user, setUser] = useState({});
   const [userPost, setUserPost] = useState([]);
@@ -24,9 +24,7 @@ export const Profile = () => {
       } else {
         setUser(data);
       }
-      
     });
-    
   }, [userId, key]);
 
   useEffect(() => {
@@ -114,24 +112,23 @@ export const Profile = () => {
                 </span>
               </p>
             </div>
-
           </div>
-            <div className="mt-5">
-              {userPost &&
-                userPost.map((item) => {
-                  return (
-                    <div key={item._id}>
-                      <Cards
-                        id={item._id}
-                        desc={item.desc}
-                        userId={item.userId}
-                        likes={item.likes}
-                        date={item.createdAt}
-                      />
-                    </div>
-                  );
-                })}
-            </div>
+          <div className="mt-5">
+            {userPost &&
+              userPost.map((item) => {
+                return (
+                  <div key={item._id}>
+                    <Cards
+                      id={item._id}
+                      desc={item.desc}
+                      userId={item.userId}
+                      likes={item.likes}
+                      date={item.createdAt}
+                    />
+                  </div>
+                );
+              })}
+          </div>
         </div>
       )}
     </>

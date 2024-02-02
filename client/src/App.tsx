@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useContext, useState , useEffect } from "react";
+import {  useState , useEffect } from "react";
 // ts-expect-error
 // import * as ReactDOM from "react-dom/client";
 import {
@@ -25,8 +25,7 @@ import { Profile } from "./components/Profile";
 import { Sidebar } from "./components/Sidebar";
 // @ts-expect-error
 import { Main } from "./components/Main";
-// @ts-expect-error
-import userContext from "./context/users/userContext";
+import { useUserContext } from "./context/users/userState";
 // @ts-expect-error
 import { SearchResult } from "./components/SearchResult";
 
@@ -35,9 +34,9 @@ function App() {
   
   
   const [isOpen, setOpen] = useState(true);
-  const userState = useContext(userContext);
-  // @ts-expect-error
-  const {loadUser} = userState;
+  const UserState = useUserContext();
+  
+  const { loadUser } = UserState;
   useEffect(() => {
     loadUser()
     if(window.innerWidth <=1024){
@@ -63,7 +62,7 @@ function App() {
                   <Feed />
                 </div>
           ),
-        },
+        }, 
         {
           path: "acc/:userId",
           element:(

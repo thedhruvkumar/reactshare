@@ -1,5 +1,5 @@
 import React,{useState,useContext}  from 'react'
-import authContext from "../context/auth/authContext";
+import authContext from "../context/auth/auth";
 import { toast } from 'react-toastify';
 import { CircularProgress } from "@mui/material";
 import {Navigate} from "react-router-dom";
