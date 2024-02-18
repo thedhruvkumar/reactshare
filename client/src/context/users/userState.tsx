@@ -1,6 +1,7 @@
 import React, { useState , createContext, useContext} from "react";
+import { User } from "../../@types/interfaces/user";
 
-export const userContext = createContext<unknown | undefined>(undefined);
+const userContext = createContext<User | undefined | unknown>(undefined);
 
 
 const HOST =  import.meta.env.VITE_APP_SERVER_HOST || `http://localhost:3001`;
@@ -98,8 +99,8 @@ export default UserState;
 
 
 export function useUserContext(){
-  const auth = useContext(userContext);
-  if(auth===undefined) throw new Error("PostContext Undefined");
+  const UserState = useContext(userContext);
+  if(UserState===undefined) throw new Error("PostContext Undefined");
 
-  return auth;
+  return UserState;
 }
