@@ -1,13 +1,14 @@
 import React, { useState , createContext, useContext } from "react";
 import { useJwt } from "react-jwt";
+import { Post } from "../../@types/interfaces/post";
 
-export const postContext = createContext<unknown | undefined>(undefined);
+const postContext = createContext<unknown | undefined>(undefined);
 
 // const HOST =  `https://determined-pleat-worm.cyclic.app`;
 const HOST =  import.meta.env.VITE_APP_SERVER_HOST || `http://localhost:3001`;
 
 const PostState =  ({children}:{children:React.ReactNode}) => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const { decodedToken } = useJwt(
     `${localStorage.getItem("auth-token")}`
   );
@@ -44,9 +45,9 @@ const PostState =  ({children}:{children:React.ReactNode}) => {
     });
 
     const json = await data.json();
-    const np =posts.concat(json)
+    const np : Post[] = posts.concat(json)
     
-    setPosts(np.sort((a:any,b:any)=>b.createdAt - a.createdAt));
+    setPosts(np.sort((a,b)=>b.createdAt - a.createdAt));
     return json;
   };
 
@@ -123,8 +124,8 @@ export default PostState;
 
 
 export function usePostContext(){
-  const auth = useContext(postContext);
-  if(auth===undefined) throw new Error("PostContext Undefined");
+  const PostState = useContext(postContext);
+  if(PostState===undefined) throw new Error("PostContext Undefined");
 
-  return auth;
+  return PostState;
 }
